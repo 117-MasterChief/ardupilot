@@ -81,7 +81,7 @@ private:
      */
     const struct Model {
         // model mass kg
-        float mass = 3.0;
+        float mass = 4.27;
 
         // diameter of model
         float diagonal_size = 0.35;
@@ -104,7 +104,7 @@ private:
         float battCapacityAh = 0.0;
 
         // CTUN.ThO at hover at refAlt
-        float hoverThrOut = 0.39;
+        float hoverThrOut = 0.556;
 
         // MOT_THST_EXPO
         float propExpo = 0.65;
