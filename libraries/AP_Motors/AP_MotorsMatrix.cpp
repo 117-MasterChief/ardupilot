@@ -246,9 +246,15 @@ void AP_MotorsMatrix::output_armed_stabilizing()
     // ensure that throttle_avg_max is between the input throttle and the maximum throttle
     throttle_avg_max = constrain_float(throttle_avg_max, throttle_thrust, throttle_thrust_max);
 
-    // throttle providing maximum roll, pitch and yaw range
-    // calculate the highest allowed average thrust that will provide maximum control range
-    float throttle_thrust_best_rpy = MIN(0.5f, throttle_avg_max);
+    // Ensure desired altitude output is not sacrificed for attitude output, but allow sacrifice of climb rate.
+    constexpr float AIRCRAFT_TW{1.66f};
+    const float desired_altitude_output = MIN(throttle_thrust, 1.0f/AIRCRAFT_TW);
+
+    // throttle facilitating physically maximum roll, pitch or yaw output.
+    constexpr float THROTTLE_FOR_MAX_RPY{0.5f};
+
+    // Constraint on the low end is to set a sensible throttle in case hover throttle was not set.
+    float throttle_thrust_best_rpy = constrain_float(desired_altitude_output, THROTTLE_FOR_MAX_RPY, throttle_avg_max);
 
     // calculate throttle that gives most possible room for yaw which is the lower of:
     //      1. 0.5f - (rpy_low+rpy_high)/2.0 - this would give the maximum possible margin above the highest motor and below the lowest
