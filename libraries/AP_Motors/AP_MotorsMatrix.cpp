@@ -771,7 +771,6 @@ bool AP_MotorsMatrix::setup_quad_matrix(motor_frame_type frame_type)
         break;
     default:
         // quad frame class does not support this frame type
-        _frame_type_string = "UNSUPPORTED";
         return false;
     }
     return true;
@@ -851,7 +850,6 @@ bool AP_MotorsMatrix::setup_hexa_matrix(motor_frame_type frame_type)
     }
     default:
         // hexa frame class does not support this frame type
-        _frame_type_string = "UNSUPPORTED";
         return false;
     } //hexa
     return true;
@@ -971,7 +969,6 @@ bool AP_MotorsMatrix::setup_octa_matrix(motor_frame_type frame_type)
     }
     default:
         // octa frame class does not support this frame type
-        _frame_type_string = "UNSUPPORTED";
         return false;
     } // octa frame type
     return true;
@@ -1094,7 +1091,6 @@ bool AP_MotorsMatrix::setup_octaquad_matrix(motor_frame_type frame_type)
     }
     default:
         // octaquad frame class does not support this frame type
-        _frame_type_string = "UNSUPPORTED";
         return false;
     } //octaquad
     return true;
@@ -1146,7 +1142,6 @@ bool AP_MotorsMatrix::setup_dodecahexa_matrix(motor_frame_type frame_type)
     }
     default:
         // dodeca-hexa frame class does not support this frame type
-        _frame_type_string = "UNSUPPORTED";
         return false;
     } //dodecahexa
     return true;
@@ -1299,7 +1294,6 @@ void AP_MotorsMatrix::setup_motors(motor_frame_class frame_class, motor_frame_ty
 #endif //AP_MOTORS_FRAME_DECA_ENABLED
     default:
         // matrix doesn't support the configured class
-        _frame_class_string = "UNSUPPORTED";
         success = false;
         _mav_type = MAV_TYPE_GENERIC;
         break;
@@ -1308,6 +1302,9 @@ void AP_MotorsMatrix::setup_motors(motor_frame_class frame_class, motor_frame_ty
     // normalise factors to magnitude 0.5
     normalise_rpy_factors();
 
+    if (!success) {
+        _frame_class_string = "UNSUPPORTED";
+    }
     set_initialised_ok(success);
 }
 
