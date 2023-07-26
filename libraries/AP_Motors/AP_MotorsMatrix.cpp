@@ -247,7 +247,7 @@ void AP_MotorsMatrix::output_armed_stabilizing()
     throttle_avg_max = constrain_float(throttle_avg_max, throttle_thrust, throttle_thrust_max);
 
     // Ensure desired altitude output is not sacrificed for attitude output, but allow sacrifice of climb rate.
-    constexpr float AIRCRAFT_TW{1.66f};
+    constexpr float AIRCRAFT_TW{1.5};
     const float desired_altitude_output = MIN(throttle_thrust, 1.0f/AIRCRAFT_TW);
 
     // throttle facilitating physically maximum roll, pitch or yaw output.
@@ -304,11 +304,11 @@ void AP_MotorsMatrix::output_armed_stabilizing()
     }
 
     // calculate the maximum yaw control that can be used
-    // todo: make _yaw_headroom 0 to 1
-    float yaw_allowed_min = (float)_yaw_headroom * 0.001f;
+    // [0, 1]: minimum guaranteed yaw_thrust magnitude (yaw_thrust is in [-1, 1]). 
+    constexpr float MIN_YAW_ALLOWED{0.1};
 
     // increase yaw headroom to 50% if thrust boost enabled
-    yaw_allowed_min = boost_ratio(0.5, yaw_allowed_min);
+    float yaw_allowed_min = boost_ratio(0.5, MIN_YAW_ALLOWED);
 
     // Let yaw access minimum amount of head room
     yaw_allowed = MAX(yaw_allowed, yaw_allowed_min);

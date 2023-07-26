@@ -1,0 +1,3 @@
+./waf clean
+./waf configure --board PH4-mini
+./waf --targets bin/arducopter
