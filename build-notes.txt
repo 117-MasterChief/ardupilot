@@ -1,3 +1,7 @@
+git submodule update --init --recursive
 ./waf clean
 ./waf configure --board PH4-mini
+./waf configure --board Pixhawk6X
 ./waf --targets bin/arducopter
+
+Upload `build/Pixhawk6X/bin/arducopter.apj` to Pixhawk using Mission Planner.
