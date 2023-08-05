@@ -1,3 +1,5 @@
+Building and installing new firmware:
+
 git submodule update --init --recursive
 ./waf clean
 ./waf configure --board PH4-mini
@@ -5,3 +7,11 @@ git submodule update --init --recursive
 ./waf --targets bin/arducopter
 
 Upload `build/Pixhawk6X/bin/arducopter.apj` to Pixhawk using Mission Planner.
+
+Fetching a particular release / beta:
+
+1. Get HEAD commit of desired (release/beta) branch.
+2. Make a new branch.
+3. Reset hard to the HEAD commit (might need to `git fetch` the remote branch).
+4. cherry-pick the (preferably squashed, single-commit) changes onto the new branch.
+5. Compile!
